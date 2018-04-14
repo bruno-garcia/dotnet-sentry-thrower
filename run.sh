@@ -1,19 +1,22 @@
 #!/bin/bash
 set -e
 
-rm -rf ~/.nuget/packages/sharpraven
-dotnet restore --ignore-failed-sources
-dotnet build -c Release
+if [ "$1" != "--no-build" ]; then
+    rm -rf bin/Release
+    rm -rf ~/.nuget/packages/sharpraven
+    dotnet restore --ignore-failed-sources
+    dotnet build -c Release
+fi
 
-#dotnet bin/Release/netcoreapp2.0/CoreThrower.dll
+set +e
 
 for throwerPathDll in bin/Release/*/CoreThrower.dll; do
     [ -e "$throwerPathDll" ] || continue
-    echo $throwerPathDll
+    printf "\nRunning: $throwerPathDll\n"
     dotnet $throwerPathDll
 done
 for throwerPathExe in bin/Release/*/CoreThrower.exe; do
     [ -e "$throwerPathExe" ] || continue
-    echo $throwerPathExe
+    printf "\nRunning: $throwerPathExe\n"
     mono $throwerPathExe
 done
