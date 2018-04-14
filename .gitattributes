@@ -1,0 +1,4 @@
+*.cs text=auto diff=csharp
+*.csproj text=auto
+*.sh eol=lf
+*.cmd eol=crlf
