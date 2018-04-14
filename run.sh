@@ -15,5 +15,5 @@ done
 for throwerPathExe in bin/Release/*/CoreThrower.exe; do
     [ -e "$throwerPathExe" ] || continue
     echo $throwerPathExe
-    eval $throwerPathExe
+    mono $throwerPathExe
 done
