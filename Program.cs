@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 #if !NET35
 using System.Threading.Tasks;
 #endif
@@ -10,9 +11,9 @@ namespace CoreThrower
     class Program
     {
 #if NET40 || NET35
-        static void  Main()
+        static void Main(string[] args)
 #else
-        static async Task Main()
+        static async Task Main(string[] args)
 #endif
         {
             var dsn = Environment.GetEnvironmentVariable("SENTRY_DSN") ?? "https://5fd7a6cda8444965bade9ccfd3df9882@sentry.io/1188141";
@@ -21,7 +22,7 @@ namespace CoreThrower
             System.Console.WriteLine("Built against: " + framework);
             var client = new RavenClient(dsn);
 
-            var ex = new Exception("I love throwing.");
+            var ex = new Exception(args.FirstOrDefault() ?? "I love throwing.");
             ex.Data.Add("AppBuiltTargetingFramework", framework);
 
 #if NET40 || NET35

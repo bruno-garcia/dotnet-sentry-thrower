@@ -5,7 +5,6 @@
     <LangVersion>7.1</LangVersion>
     <TargetFrameworks>netcoreapp2.0;net471;net46;net452;net45;net40</TargetFrameworks>
   </PropertyGroup>
-  
   <ItemGroup>
     <PackageReference Include="SharpRaven" Version="1.0.0" />
   </ItemGroup>
@@ -32,5 +31,4 @@
     <FrameworkPathOverride Condition="'$(BaseFrameworkPathOverrideForMono)' != '' AND '$(TargetFramework)' == 'net471'">$(BaseFrameworkPathOverrideForMono)/4.7.1-api</FrameworkPathOverride>
     <EnableFrameworkPathOverride Condition="'$(BaseFrameworkPathOverrideForMono)' != ''">true</EnableFrameworkPathOverride>
   </PropertyGroup>
-
 </Project>

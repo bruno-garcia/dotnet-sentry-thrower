@@ -1,5 +1,11 @@
 @echo off
-if "%1" == "--no-build" goto run
+
+if "%1" == "--no-build" (
+	set message=%2
+	goto run
+) else (
+	set message=%1
+)
 
 if exist %userprofile%\.nuget\packages\sharpraven (
 	rd /s /q %userprofile%\.nuget\packages\sharpraven || exit /b %errorlevel%
@@ -17,9 +23,9 @@ for /f %%a in ('dir /s /b CoreThrower.exe CoreThrower.dll ^| find /v "obj" ^| fi
 	echo.
 	echo Running: !throwerPath!
 	if "!throwerPath:~-3!" == "exe" (
-		!throwerPath!
+		!throwerPath! %message%
 	) else (
-		dotnet !throwerPath!
+		dotnet !throwerPath! %message%
 	)
 )
 endlocal
