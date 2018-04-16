@@ -29,7 +29,7 @@ namespace CoreThrower
             Console.WriteLine($@"TimeZoneInfo.Local.DaylightName:                        {Safe(() => TimeZoneInfo.Local.DaylightName.ToString())}");
             Console.WriteLine($@"TimeZoneInfo.Local.BaseUtcOffset:                       {Safe(() => TimeZoneInfo.Local.BaseUtcOffset.ToString())}");
             Console.WriteLine($@"DateTimeOffset.Now.Offset:                              {Safe(() => DateTimeOffset.Now.Offset.ToString())}");
-            Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE", EnvironmentVariableTarget.Machine)}");
+            Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE", EnvironmentVariableTarget.Process)}");
             Console.WriteLine($@"PROCESSOR_ARCHITECTURE:                                 {Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"Environment.OSVersion:                                  {Safe(() => Environment.OSVersion.ToString())}");
             Console.WriteLine($@"MonoVersion():                                          {Safe(MonoVersion)}");
