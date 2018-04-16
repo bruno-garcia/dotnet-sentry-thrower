@@ -20,8 +20,12 @@ namespace CoreThrower
             var framework = TargetFramework();
             Console.WriteLine($@"Built against:                                          {framework}");
             Console.WriteLine($@"Environment.Version:                                    {Safe(() => Environment.Version.ToString())}");
-            Console.WriteLine($@"TimeZoneInfo.Local:                                     {Safe(() => TimeZoneInfo.Local.ToString())}");
-            Console.WriteLine($@"TimeZone.CurrentTimeZone:  (marked as obsolete)         {Safe(() => TimeZone.CurrentTimeZone.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local.DisplayName:                         {Safe(() => TimeZoneInfo.Local.DisplayName.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local.Id:                                  {Safe(() => TimeZoneInfo.Local.Id.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local.StandardName:                        {Safe(() => TimeZoneInfo.Local.StandardName.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local.DaylightName:                        {Safe(() => TimeZoneInfo.Local.DaylightName.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local.BaseUtcOffset:                       {Safe(() => TimeZoneInfo.Local.BaseUtcOffset.ToString())}");
+            Console.WriteLine($@"DateTimeOffset.Now.Offset:                              {Safe(() => DateTimeOffset.Now.Offset.ToString())}");
             Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"PROCESSOR_ARCHITECTURE:                                 {Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"Environment.OSVersion:                                  {Safe(() => Environment.OSVersion.ToString())}");
