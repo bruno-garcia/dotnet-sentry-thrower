@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 #if NETCOREAPP2_0
 using System.Runtime.InteropServices;
@@ -20,6 +21,8 @@ namespace CoreThrower
             var framework = TargetFramework();
             Console.WriteLine($@"Built against:                                          {framework}");
             Console.WriteLine($@"Environment.Version:                                    {Safe(() => Environment.Version.ToString())}");
+            Console.WriteLine($@"Dns.GetHostName():                                      {Safe(() => Dns.GetHostName().ToString())}");
+            Console.WriteLine($@"Environment.MachineName:                                {Safe(() => Environment.MachineName.ToString())}");
             Console.WriteLine($@"TimeZoneInfo.Local.DisplayName:                         {Safe(() => TimeZoneInfo.Local.DisplayName.ToString())}");
             Console.WriteLine($@"TimeZoneInfo.Local.Id:                                  {Safe(() => TimeZoneInfo.Local.Id.ToString())}");
             Console.WriteLine($@"TimeZoneInfo.Local.StandardName:                        {Safe(() => TimeZoneInfo.Local.StandardName.ToString())}");
