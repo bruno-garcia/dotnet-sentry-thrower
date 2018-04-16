@@ -20,13 +20,13 @@ namespace CoreThrower
             var framework = TargetFramework();
             Console.WriteLine($@"Built against:                                          {framework}");
             Console.WriteLine($@"Environment.Version:                                    {Safe(() => Environment.Version.ToString())}");
+            Console.WriteLine($@"TimeZoneInfo.Local:                                     {Safe(() => TimeZoneInfo.Local.ToString())}");
+            Console.WriteLine($@"TimeZone.CurrentTimeZone:  (marked as obsolete)         {Safe(() => TimeZone.CurrentTimeZone.ToString())}");
             Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"PROCESSOR_ARCHITECTURE:                                 {Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"Environment.OSVersion:                                  {Safe(() => Environment.OSVersion.ToString())}");
             Console.WriteLine($@"MonoVersion():                                          {Safe(MonoVersion)}");
             Console.WriteLine($@"MsCorLibVer():                                          {Safe(MsCorLibVer)}");
-            Console.WriteLine($@"MsCorLibNameVer():                                      {Safe(MsCorLibNameVer)}");
-            Console.WriteLine($@"MsCorLibOrSystemRuntime():                              {Safe(MsCorLibOrSystemRuntime)}");
             Console.WriteLine($@"GetAssemblyNameFromEntryMethod().Name:                  {Safe(() => GetAssemblyNameFromStackTrace()?.Name)}");
             Console.WriteLine($@"GetAssemblyNameFromEntryMethod().Version:               {Safe(() => GetAssemblyNameFromStackTrace()?.Version.ToString())}");
             Console.WriteLine($@"GetAssemblyNameFromEntryAssembly().Name:                {Safe(() => GetAssemblyNameFromEntryAssembly()?.Name)}");
@@ -94,11 +94,6 @@ namespace CoreThrower
                 .FirstOrDefault() as AssemblyFileVersionAttribute)
                 ?.Version;
 
-        private static string MsCorLibNameVer()
-            => typeof(object).Assembly.GetName().Version.ToString();
-
-        private static string MsCorLibOrSystemRuntime() => typeof(object).Assembly.FullName;
-
         // https://github.com/dotnet/corefx/issues/9012#issuecomment-229421187
         private static string MonoVersion()
             => Type.GetType("Mono.Runtime", false)
@@ -107,16 +102,19 @@ namespace CoreThrower
 
         public static AssemblyName GetAssemblyNameFromEntryAssembly()
             // Returns null when entry is unmanaged code
+            // Fails when running tests but worked on CLR, Mono and CoreCLR, Win, macOS and Linux
             => Assembly.GetEntryAssembly()?.GetName();
 
         public static AssemblyName GetAssemblyNameFromCurrentProcess()
         {
+            // Doesn't work with 'dotnet app.dll or mono app.exe'
             var currentProc = Process.GetCurrentProcess();
             return AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault(assembly => assembly.Location == currentProc.MainModule.FileName)
                 ?.GetName();
         }
 
+        // Worked in all cases tested: CLR, mono, coreCLR
         internal static AssemblyName GetAssemblyNameFromStackTrace()
             => GetApplicationEntryMethod()?.Module?.Assembly?.GetName();
 
