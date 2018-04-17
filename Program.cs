@@ -16,8 +16,6 @@ namespace CoreThrower
     {
         static void Main(string[] args)
         {
-
-
             var framework = TargetFramework();
             Console.WriteLine($@"Built against:                                          {framework}");
             Console.WriteLine($@"Environment.Version:                                    {Safe(() => Environment.Version.ToString())}");
@@ -29,11 +27,16 @@ namespace CoreThrower
             Console.WriteLine($@"TimeZoneInfo.Local.DaylightName:                        {Safe(() => TimeZoneInfo.Local.DaylightName.ToString())}");
             Console.WriteLine($@"TimeZoneInfo.Local.BaseUtcOffset:                       {Safe(() => TimeZoneInfo.Local.BaseUtcOffset.ToString())}");
             Console.WriteLine($@"DateTimeOffset.Now.Offset:                              {Safe(() => DateTimeOffset.Now.Offset.ToString())}");
-            Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE", EnvironmentVariableTarget.Process)}");
+            Console.WriteLine($@"HOSTTYPE:                                               {Environment.GetEnvironmentVariable("HOSTTYPE")}");
             Console.WriteLine($@"PROCESSOR_ARCHITECTURE:                                 {Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE", EnvironmentVariableTarget.Machine)}");
             Console.WriteLine($@"Environment.OSVersion:                                  {Safe(() => Environment.OSVersion.ToString())}");
+            Console.WriteLine($@"Environment.OSVersion.Platform:                         {Safe(() => Environment.OSVersion.Platform.ToString())}");
+            Console.WriteLine($@"Environment.OSVersion.VersionString:                    {Safe(() => Environment.OSVersion.VersionString.ToString())}");
+            Console.WriteLine($@"Environment.OSVersion.Version.Build:                    {Safe(() => Environment.OSVersion.Version.Build.ToString())}");
+            Console.WriteLine($@"Environment.OSVersion.Version:                          {Safe(() => Environment.OSVersion.Version.ToString())}");
             Console.WriteLine($@"MonoVersion():                                          {Safe(MonoVersion)}");
             Console.WriteLine($@"MsCorLibVer():                                          {Safe(MsCorLibVer)}");
+            Console.WriteLine($@"GetComputerStartupTime():                               {Safe(GetComputerStartupTime)}");
             Console.WriteLine($@"GetAssemblyNameFromEntryMethod().Name:                  {Safe(() => GetAssemblyNameFromStackTrace()?.Name)}");
             Console.WriteLine($@"GetAssemblyNameFromEntryMethod().Version:               {Safe(() => GetAssemblyNameFromStackTrace()?.Version.ToString())}");
             Console.WriteLine($@"GetAssemblyNameFromEntryAssembly().Name:                {Safe(() => GetAssemblyNameFromEntryAssembly()?.Name)}");
@@ -70,6 +73,12 @@ namespace CoreThrower
             }
         }
 
+        public static string GetComputerStartupTime()
+        {
+            return new DateTimeOffset(
+                DateTime.UtcNow - TimeSpan.FromTicks(Stopwatch.GetTimestamp()),
+                TimeSpan.Zero).ToString();
+        }
 #if NETCOREAPP2_0
         // https://github.com/dotnet/corefx/blob/f7bec37564c1b61450090336b9cc76b64480d915/src/CoreFx.Private.TestUtilities/src/System/PlatformDetection.cs
         private static string GetIsWindowsSubsystemForLinux()
