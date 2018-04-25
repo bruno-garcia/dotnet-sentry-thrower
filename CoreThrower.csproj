@@ -28,4 +28,8 @@
     <FrameworkPathOverride Condition="'$(BaseFrameworkPathOverrideForMono)' != '' AND '$(TargetFramework)' == 'net471'">$(BaseFrameworkPathOverrideForMono)/4.7.1-api</FrameworkPathOverride>
     <EnableFrameworkPathOverride Condition="'$(BaseFrameworkPathOverrideForMono)' != ''">true</EnableFrameworkPathOverride>
   </PropertyGroup>
+
+ <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+   <PackageReference Include="Xam.Plugin.DeviceInfo" Version="3.1.0.57-beta" />
+ </ItemGroup>
 </Project>
