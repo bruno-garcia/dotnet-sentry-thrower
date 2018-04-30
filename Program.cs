@@ -16,8 +16,11 @@ namespace CoreThrower
         static async Task Main(string[] args)
 #endif
         {
-            var dsn = Environment.GetEnvironmentVariable("SENTRY_DSN") ?? "https://5fd7a6cda8444965bade9ccfd3df9882@sentry.io/1188141";
-            
+            var dsn = Environment.GetEnvironmentVariable("SENTRY_DSN")
+            ?? "https://bd6ec3bf83bf4646952723c20ab16cd3@sentry.garcia.in/1";
+
+            System.Console.WriteLine("Using DSN: " + dsn);
+
             var framework = TargetFramework();
             System.Console.WriteLine("Built against: " + framework);
             var client = new RavenClient(dsn);
