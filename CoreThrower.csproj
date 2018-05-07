@@ -6,7 +6,8 @@
     <TargetFrameworks>netcoreapp2.0;net471;net46;net452;net45;net40</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SharpRaven" Version="2.3.3-unstable0014" />
+    <PackageReference Include="SharpRaven" Version="1.0.0" />
+    <!-- <PackageReference Include="SharpRaven" Version="2.3.3-unstable0015" /> -->
   </ItemGroup>
 
  <PropertyGroup>
